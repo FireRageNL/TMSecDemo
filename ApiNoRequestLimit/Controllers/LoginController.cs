@@ -22,22 +22,37 @@ namespace ApiNoRequestLimit.Controllers
             _logger = logger;
         }
 
-        [HttpGet("default/{toEncrypt}")]
-        public ActionResult Post(string toEncrypt)
+        [HttpGet("default")]
+        public ActionResult Post(string toEncrypt, int amount)
         {
-            return Ok(Hash.GenerateUnsafeHash(toEncrypt));
+            string[] hashes = new string[amount];
+            for(int i = 0; i < amount; i++)
+            {
+                hashes[i] = Hash.GenerateUnsafeHash(toEncrypt);
+            }
+            return Ok(String.Join("\n", hashes));
         }
 
-        [HttpGet("salted/{toEncrypt}")]
-        public ActionResult PostSafe(string toEncrypt)
+        [HttpGet("salted")]
+        public ActionResult PostSafe(string toEncrypt, int amount)
         {
-            return Ok(Hash.GenerateHash(toEncrypt));
+            string[] hashes = new string[amount];
+            for(int i = 0; i < amount; i++)
+            {
+                hashes[i] = Hash.GenerateHash(toEncrypt);
+            }
+            return Ok(String.Join("\n", hashes));
         }
 
-        [HttpGet("limited/{toEncrypt}")]
-        public ActionResult PostLimited(string toEncrypt)
+        [HttpGet("limited")]
+        public ActionResult PostLimited(string toEncrypt, int amount)
         {
-            return Ok(Hash.GenerateHash(toEncrypt));
+            string[] hashes = new string[amount];
+            for (int i = 0; i < amount; i++)
+            {
+                hashes[i] = Hash.GenerateHash(toEncrypt);
+            }
+            return Ok(String.Join("\n", hashes));
         }
     }
 }
