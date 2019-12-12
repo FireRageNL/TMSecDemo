@@ -54,5 +54,14 @@ namespace ApiNoRequestLimit.Controllers
             }
             return Ok(String.Join("\n", hashes));
         }
+
+		[HttpGet("password")]
+		public ActionResult GetPassword(string Password)
+		{
+			string saltPre = Hash.getSalt();
+			string saltPost = Hash.getSalt();
+			string pass = Hash.GeneratePasswordHash(Password, saltPre, saltPost);
+			return Ok(saltPre + ":" + pass + ":" + saltPost);
+		}
     }
 }

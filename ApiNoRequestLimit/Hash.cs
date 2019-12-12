@@ -22,21 +22,17 @@ namespace APIDemo
                 return Convert.ToBase64String(hash);
             }
         }
+		public static string GeneratePasswordHash(string input,string saltPre, string saltPost)
+		{
+			var uEncode = new UnicodeEncoding();
+			byte[] bytClearString = uEncode.GetBytes(saltPre + input + saltPost);
 
-        public static bool VerifyPassword(string username, string password)
-        {
-
-            Dictionary<string, string> passwordDictionary = new Dictionary<string, string>();
-            passwordDictionary.Add("test", "rNxzWTm6G6m50rz3goDdVsQWYFTvrwcFSwpEN4MtHcf2hhy6DDzpnPqSRxXSsYDjSVmh6zbWog4v+mstWl//oQ==");
-            passwordDictionary.Add("testing", "dYJFTscefS5dOhEwULTYrJ/VLoTiNEF5A7HEe6jL2A3J6ggAcOwQvINdqEuyukmfxHqVQ+fwpb7AtcGVdZHToA==");
-
-            if (passwordDictionary.ContainsKey(username))
-            {
-                return GenerateUnsafeHash(password) == passwordDictionary[username];
-            }
-            return false;
-        }
-
+			using (var sha = new SHA512Managed())
+			{
+				byte[] hash = sha.ComputeHash(bytClearString);
+				return Convert.ToBase64String(hash);
+			}
+		}
         public static string GenerateUnsafeHash(string input)
         {
             var saltPre = "aaaaaa";
