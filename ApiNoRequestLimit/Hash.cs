@@ -35,8 +35,8 @@ namespace APIDemo
 		}
         public static string GenerateUnsafeHash(string input)
         {
-            var saltPre = "aaaaaa";
-            var saltPost = "aaaaaaaaaaaa";
+            var saltPre = "1273";
+            var saltPost = "rkflstr";
             var uEncode = new UnicodeEncoding();
             byte[] bytClearString = uEncode.GetBytes(saltPre + input + saltPost);
 
